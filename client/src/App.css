@@ -36,3 +36,22 @@ body {
   width: 250px;
   margin-top: 3%;
 }
+
+.recipe-header {
+  text-align: center;
+  font-size: 30px;
+  font-weight: 800;
+  margin-top: 10%;
+}
+
+.recipe-image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 300px;
+}
+
+.recipe-btn {
+  margin-left: 12%;
+  margin-top: 3%;
+}
