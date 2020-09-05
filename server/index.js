@@ -19,9 +19,9 @@ app.post('/upload', upload.single('food_image'), (req, res) => {
     const encoded = req.file.buffer.toString('base64');
     const image_byte_data = {base64: encoded};
     clarifaiApp.models.predict(Clarifai.FOOD_MODEL, image_byte_data).then(resp => {
-        const potentialFoods = resp.rawData.outputs[0].data.concepts.filter(concept => concept.value >= .99);
+        // Get top 3 potential foods
+        const potentialFoods = resp.rawData.outputs[0].data.concepts.slice(0, 3);
         const foodNames = potentialFoods.map(food => food.name);
-        console.log(foodNames)
         res.send(foodNames);
     });
 });
