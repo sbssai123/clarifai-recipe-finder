@@ -1,14 +1,38 @@
 body {
-  background-color: #77e2b0;
+  background-color: rgb(120, 226, 177);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.btn-primary {
+  margin-right: 10%;
 }
 
 .app-header {
   margin-top: 5%;
-  margin-left: 8%;
+  margin-left: 5%;
 }
 
 .header-words {
   font-size: 35px;
   font-weight: 800;
+}
+
+.file-upload {
+  display: none;
+  border: black;
+}
+
+.image-upload-button {
+  height: 600px;
+  width: 90%;
+  margin-left: 8%;
+  background-color: rgba(206, 255, 232, 0.7);
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.food-image {
+  height: 250px;
+  width: 250px;
+  margin-top: 3%;
 }
