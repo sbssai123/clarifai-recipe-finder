@@ -3,16 +3,19 @@ import multer from 'multer'
 import Clarifai from 'clarifai'
 import dotenv from 'dotenv'
 import request from 'request'
+import cors from 'cors';
 
 dotenv.config()
 const upload = multer()
 const clarifaiApp = new Clarifai.App({apiKey: process.env.CLARIFAI_API_KEY});
-
-const app = express()
 const EDAMAM_RECIPE_API_BASE = "https://api.edamam.com/search"
 
+// initialize the app with cors to allow for frontend app to send
+const app = express()
+app.use(cors())
+
 // Endpoint for sending an image to the Calrifai API
-app.post('/upload', upload.single('image'), (req, res) => {
+app.post('/upload', upload.single('food_image'), (req, res) => {
     const encoded = req.file.buffer.toString('base64');
     const image_byte_data = {base64: encoded};
     clarifaiApp.models.predict(Clarifai.FOOD_MODEL, image_byte_data).then(resp => {
@@ -38,7 +41,7 @@ app.get('/get_recipes', (req, res) => {
                 console.log(err)
             }
             else {
-                res.send(response.bodys)
+                res.send(response.body)
             }
         });
     }
