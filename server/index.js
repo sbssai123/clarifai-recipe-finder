@@ -41,7 +41,15 @@ app.get('/get_recipes', (req, res) => {
                 console.log(err)
             }
             else {
-                res.send(response.body)
+                // Convert response to JSON object
+                const allRecipes = JSON.parse(response.body)
+                const topRecipe = allRecipes.hits[0].recipe;
+                const recipeData = {
+                    title: topRecipe.label,
+                    image: topRecipe.image,
+                    recipeLink: topRecipe.url
+                };
+                res.send(recipeData)
             }
         });
     }

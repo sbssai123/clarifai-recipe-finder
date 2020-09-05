@@ -4,7 +4,9 @@ import axios from 'axios';
 
 class App extends Component {
   state = {
-    foodItems: []
+    foodItems: [],
+    foodImagesUploaded: [],
+    recipe: {}
   }
 
   // When food image file is selected, send
@@ -18,6 +20,8 @@ class App extends Component {
       };
       axios.post('/upload', formData, config).then(response => {
         const allFoodItems = [...this.state.foodItems, response.data]
+        const allFoodImages = [...this.state.foodImagesUploaded, URL.createObjectURL(file)]
+        this.setState({foodImagesUploaded: allFoodImages})
         this.setState({foodItems: allFoodItems})
       });
   }
@@ -28,12 +32,13 @@ class App extends Component {
     const foodQueryString = this.state.foodItems.join(',');
     const params = {params: {ingrediants: foodQueryString}};
     axios.get('/get_recipes', params).then(response => {
-      console.log(response)
+      this.setState({recipe: response.data})
     });
   }
 
   render() {
-  const listOfFood = this.state.foodItems.map((item) => <div>{item}</div>);
+  const listOfFood = this.state.foodItems.join(", ");
+  const foodImages = this.state.foodImagesUploaded.map((image) => <div><img className="food-image" src={image}/></div>)
     return (
       <div className="container-flex">
         <div className="app-header">
@@ -41,17 +46,36 @@ class App extends Component {
         </div>
         <div className="row">
           <div className="col">
-              <label for="myfile">Select a file:</label>
-              <input type="file" id="food_image" name="food_image" onChange={this.onFileChange}/>
+            <FoodImageUploader onFileChange={this.onFileChange} />
           </div>
           <div className="col">
-            <button onClick={this.onFindRecipe}>Find Recipe!</button>
-            {listOfFood}
+            <button className="btn btn-primary float-right" onClick={this.onFindRecipe}>Find Recipe!</button>
+            <div>
+              <b>Ingrediants: </b>{listOfFood}
+            </div>
+            {foodImages}
           </div>
         </div>
       </div>
     );
   }
+}
+
+// Represents Food Images to Upload
+const FoodImageUploader = ({onFileChange}) => {
+  // For remove the default styling of "File Upload Input"
+  const hiddenFileInput = React.useRef(null);
+  const handleClick = event => {
+    hiddenFileInput.current.click();
+  };
+  return (
+    <>
+      <button className="image-upload-button" onClick={handleClick}> 
+        Click here to upload images of the ingrediants you have at home to discover new recipes!! 😋
+      </button>
+      <input className="file-upload" type="file" id="food_image" accept="image/*" ref={hiddenFileInput} onChange={onFileChange}/>
+    </>
+  );
 }
 
 export default App;
