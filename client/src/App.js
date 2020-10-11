@@ -113,7 +113,7 @@ const Recipe = ({recipe, onFindNewRecipe}) => {
       <div className="row">
       <div className="col-4"></div>
         <div className="col-4">
-          <button className="btn btn-secondary recipe-btn" onClick={onFindNewRecipe} target="_blank">Find New Recipe</button>
+          <button className="btn btn-secondary recipe-btn" onClick={onFindNewRecipe} target="_blank">Let's find new recipe!</button>
           <a className="btn btn-primary recipe-btn" href={recipe.recipeLink} target="_blank">Full Recipe</a>
         </div>
         <div className="col-4"></div>
