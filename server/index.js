@@ -19,10 +19,9 @@ app.post('/upload', upload.single('food_image'), (req, res) => {
     const encoded = req.file.buffer.toString('base64');
     const image_byte_data = {base64: encoded};
     clarifaiApp.models.predict(Clarifai.FOOD_MODEL, image_byte_data).then(resp => {
-        // Get top 3 potential foods
-        const potentialFoods = resp.rawData.outputs[0].data.concepts.slice(0, 3);
+        const potentialFoods = resp.rawData.outputs[0].data.concepts.slice(0,3);
         const foodNames = potentialFoods.map(food => food.name);
-        res.send(foodNames);
+        res.send(foodNames)
     });
 });
 
@@ -44,7 +43,6 @@ app.get('/get_recipes', (req, res) => {
                 console.log(err)
             }
             else {
-                // Convert response to JSON object
                 const allRecipes = JSON.parse(response.body)
                 const topRecipe = allRecipes.hits[0].recipe;
                 const recipeData = {

@@ -23,16 +23,16 @@ class App extends Component {
         const allFoodImages = [...this.state.foodImagesUploaded, URL.createObjectURL(file)]
         this.setState({foodImagesUploaded: allFoodImages})
         this.setState({foodItems: allFoodItems})
-      });
+      })
   }
 
   // When button clicked, send GET request to back
   // '/get_recipes' endpoint
   onFindRecipe = () => {
-    const foodQueryString = this.state.foodItems.join(',');
-    const params = {params: {ingrediants: foodQueryString}};
+    const foodQueryString = this.state.foodItems.join(",")
+    const params = {params: {ingrediants: foodQueryString}}
     axios.get('/get_recipes', params).then(response => {
-      this.setState({recipe: response.data})
+        this.setState({recipe: response.data})
     });
   }
 
